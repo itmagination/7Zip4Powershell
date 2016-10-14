@@ -57,6 +57,9 @@ namespace SevenZip4PowerShell {
         [Parameter(HelpMessage = "Disables preservation of directory structure")]
         public SwitchParameter FlattenDirectoryStructure { get; set; }
 
+        [Parameter(HelpMessage = "Disables preservation of empty directories")]
+        public SwitchParameter SkipEmptyDirectories { get; set; }
+
         private OutArchiveFormat _inferredOutArchiveFormat;
 
         protected override void BeginProcessing() {
@@ -137,7 +140,8 @@ namespace SevenZip4PowerShell {
                     CompressionLevel = _cmdlet.CompressionLevel,
                     CompressionMethod = _cmdlet.CompressionMethod,
                     CompressionMode = _cmdlet.CompressionMode,
-                    DirectoryStructure = !_cmdlet.FlattenDirectoryStructure.IsPresent
+                    DirectoryStructure = !_cmdlet.FlattenDirectoryStructure.IsPresent,
+                    IncludeEmptyDirectories = !_cmdlet.SkipEmptyDirectories.IsPresent
                 };
 
                 compressor.EncryptHeaders = _cmdlet.EncryptFilenames.IsPresent;
